@@ -1,0 +1,49 @@
+{
+  "name": "ng-tree-view",
+  "version": "0.0.0",
+  "description": "Angular 1.x Tree View Directive",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.*"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "npm-run-all": "^4.0.1",
+    "rimraf": "^2.5.4",
+    "webpack": "^2.2.0"
+  },
+  "scripts": {
+    "build": "run-s clean transpile pack:*",
+    "clean": "rimraf lib/ dist/",
+    "transpile": "babel src -d lib",
+    "pack:dev": "webpack",
+    "pack:prod": "NODE_ENV=production webpack -p",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kabirbaidhya/ng-tree-view.git"
+  },
+  "author": "Kabir Baidhya <kabirbaidhya@gmail.com>",
+  "keywords": [
+    "javascript",
+    "tree",
+    "tree-view",
+    "treeview",
+    "directive",
+    "ng-tree-view",
+    "es6",
+    "angular"
+  ],
+  "files": [
+    "lib",
+    "dist",
+    "index.js",
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ],
+  "license": "MIT"
+}

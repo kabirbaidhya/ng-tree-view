@@ -1,0 +1,27 @@
+{
+  "name": "ng-tree-view",
+  "description": "Angular 1.x Tree View Directive",
+  "main": "dist/ng-tree-view.min.js",
+  "authors": [
+    "Kabir Baidhya <kabirbaidhya@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "javascript",
+    "tree",
+    "tree-view",
+    "treeview",
+    "directive",
+    "ng-tree-view",
+    "es6",
+    "angular"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
