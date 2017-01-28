@@ -32,55 +32,52 @@ export default function TreeGenerator($compile) {
             return '';
         }
 
-        var html = '<ul class="tree-view collapsible">';
-
-        for (var index = 0; index < nodes.length; index++) {
-            var node = nodes[index];
-
-            html += getListItem(node, index, {
+        // Get the list items html
+        let listItems = nodes.map((node, index) =>
+            getListItem(node, index, {
                 maxDepth: maxDepth,
                 isCheckboxEnabled: params.isCheckboxEnabled
-            });
-        }
+            })
+        );
 
-        html += '</ul>';
-
-        return html;
+        return `<ul class="tree-view collapsible">${listItems.join('')}</ul>`;
     }
 
     function getToggleLinkHtml(nodeExpr) {
-        var isCollapsed = nodeExpr + '.collapsed';
-        var isNotCollapsed = '!' + isCollapsed;
+        var isCollapsed = `${nodeExpr}.collapsed`;
+        var isNotCollapsed = `!${isCollapsed}`;
 
         return (
-            '<a class="toggle" ng-click="vm.toggleNode(' + nodeExpr + ', $event)" ng-if="vm.hasChildren(' + nodeExpr + ')">' +
-            '<i class="fa fa-w fa-chevron-right" ng-show="' + isCollapsed + '"></i>' +
-            '<i class="fa fa-w fa-chevron-down" ng-show="' + isNotCollapsed + '"></i>' +
-            '</a>'
+            `<a class="toggle" ng-click="vm.toggleNode(${nodeExpr}, $event)" ng-if="vm.hasChildren(${nodeExpr})">` +
+            `<i class="fa fa-w fa-chevron-right" ng-show="${isCollapsed}"></i>` +
+            `<i class="fa fa-w fa-chevron-down" ng-show="${isNotCollapsed}"></i>` +
+            `</a>`
         );
     }
 
     function getLabelWithCheckbox(nodeExpr) {
-        var isSelected = nodeExpr + '.selected';
-        var name = '{{' + nodeExpr + '.name}}';
+        var isSelected = `${nodeExpr}.selected`;
+        var name = `{{${nodeExpr}.name}}`;
 
         return (
-            '<label>' +
-            '<input type="checkbox" ng-model="' + isSelected + '" ng-change="vm.handleChange(' + nodeExpr + ')"> ' +
-            '<span>' + name + '</span>' +
-            '</label>'
+            `<label>` +
+            `<input type="checkbox" ng-model="${isSelected}" ng-change="vm.handleChange(${nodeExpr})"> ` +
+            `<span>${name}</span>` +
+            `</label>`
         );
     }
 
     function getLabel(nodeExpr) {
-        var name = '{{' + nodeExpr + '.name}}';
+        var name = `{{${nodeExpr}.name}}`;
 
-        return '<span class="label">' + name + '</span>';
+        return `<span class="label">${name}</span>`;
     }
 
     function getListItem(node, index, params) {
         var maxDepth = params.maxDepth;
-        var nodeExpr = 'vm.flatNodes[' + node.id + ']';
+        var nodeExpr = `vm.flatNodes[${node.id}]`;
+        var isCollapsed = `${nodeExpr}.collapsed`;
+        var isNotCollapsed = `!${isCollapsed}`;
         var label = params.isCheckboxEnabled ? getLabelWithCheckbox(nodeExpr) : getLabel(nodeExpr);
 
         node.collapsed = (maxDepth === 0);
@@ -88,16 +85,13 @@ export default function TreeGenerator($compile) {
         maxDepth = isNaN(maxDepth) ? undefined : maxDepth - 1;
 
         return (
-            '<li class="tree-node" data-index="' + index + '" data-id="' + node.id + '"' +
-            ' ng-class="{parent: vm.hasChildren(' + nodeExpr + '), collapsed: ' + nodeExpr + '.collapsed,' +
-            ' expanded: !' + nodeExpr + '.collapsed}">' +
-
+            `<li class="tree-node" data-index="${index}" data-id="${node.id}"` +
+            ` ng-class="{parent: vm.hasChildren(${nodeExpr}), collapsed: ${isCollapsed}, expanded: ${isNotCollapsed}}">` +
             getToggleLinkHtml(nodeExpr) + label +
             generateHtml(node.children, maxDepth, params) +
-            '</li>'
+            `</li>`
         );
     }
 
     return service;
 }
-
